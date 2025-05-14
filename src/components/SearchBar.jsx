@@ -10,9 +10,12 @@ import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
+import Select from '@mui/material/Select';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -38,6 +41,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
   position: 'absolute',
+  right: 0,
   pointerEvents: 'none',
   display: 'flex',
   alignItems: 'center',
@@ -53,7 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: '20ch',
+      width: '50ch',
     },
   },
 }));
@@ -185,12 +189,38 @@ export default function SearchBar() {
             <MenuIcon />
           </IconButton>
 
-          {/* <Search sx={{
+          <Search sx={{
             width: { xs: '80%', sm: 'auto', md: '600px' },
             borderRadius: '22px',
             height: '6vh',
             display: 'flex',
           }}>
+            <FormControl sx={{ m: 1, minWidth: 120, border: 'none' }} size="small">
+              <InputLabel id="search-filter-label" shrink={false}>
+                {/* filter === '' ? 'Filter' : '' */} {/* Conditionally show label */}
+              </InputLabel>
+              <Select
+                labelId="search-filter-label"
+                id="search-filter"
+                //value={filter}
+                //onChange={handleChange}
+                displayEmpty
+                renderValue={(selected) => {
+                  if (selected === '') {
+                    return <em>All</em>; // Display "All" when no value is selected
+                  }
+                  return selected;
+                }}
+                sx={{ border: 'none', '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }}
+              >
+                <MenuItem value="">
+                  <em>All</em>
+                </MenuItem>
+                <MenuItem value="title">Title</MenuItem>
+                <MenuItem value="year">Year</MenuItem>
+                {/* Add more filter options as needed */}
+              </Select>
+            </FormControl>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
@@ -199,8 +229,8 @@ export default function SearchBar() {
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-          </Search> */}
-          <Search
+          </Search>
+          {/* <Search
             sx={{
               width: { xs: '80%', sm: 'auto', md: '600px' },
               borderRadius: '22px',
@@ -222,9 +252,9 @@ export default function SearchBar() {
                 />
               )}
             />
-          </Search>
+          </Search> */}
 
-          <Box sx={{ flexGrow: 1 }} />
+        {/*   <Box sx={{ flexGrow: 1 }} /> */}
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="error">
